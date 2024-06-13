@@ -1,0 +1,190 @@
+{
+	"geoConfigs": {
+		"voyager": {
+			"wms":	false,
+			"url":  "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
+			"options": {
+				"attribution": "Forest Explorer © <a href=\"https://www.gsic.uva.es/members/guiveg\"></a> | Tiles © <a href=\"https://www.openstreetmap.org/copyright\">OSM</a> & <a href=\"https://carto.com/attributions\">CARTO</a>",
+				"minZoom": 6,
+				"maxZoom": 22,
+				"subdomains": "abcd"
+			}
+		},
+		"esri": { 
+			"wms":	false,
+			"url":  "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+			"options": {
+				"attribution": "Forest Explorer © <a href=\"https://www.gsic.uva.es/members/guiveg\"></a> | Tiles © <a href=\"https://www.esri.com\">Esri</a>",
+				"minZoom": 6,
+				"maxZoom": 22,
+				"maxNativeZoom": 19,
+				"subdomains": "abcd"
+			}
+		},
+		"pnoa": {
+			"wms":	true,
+			"url":  "http://www.ign.es/wms-inspire/pnoa-ma?SERVICE=WMS&",
+			"options": {
+				"layers": "OI.OrthoimageCoverage",
+				"format": "image/jpeg",
+				"transparent": true,
+				"version": "1.3.0",
+				"attribution": "Forest Explorer © <a href=\"https://www.gsic.uva.es/members/guiveg\"></a> | Tiles © <a href=\"https://pnoa.ign.es/web/portal/pnoa-imagen/presentacion\">IGN PNOA</a>"
+			}
+		}
+	},
+	"geolocstart": [40.24, -4.24],	
+	"geoMaxBounds": [ [47, -20], [25, 5] ],
+	"geoMaxBoundsViscosity": 1.0,
+
+	
+	
+	"mapConfig": {
+		"mapType": [ "default", "satellite" ],
+		"mapDetails": [ "auto", "patches", "regions", "munis" ],
+		"plots": [ "true", "false" ],
+	},
+	"degreesStep6": 8,
+	"minAreaStep6": 16000000,
+	"zonasValidas": [
+		[ [43.795, -9.600], [36.000, 3.333] ],
+		[ [29.450, -18.166], [27.636, -13.410] ]
+	],
+	
+	
+	"timeout": 4000,
+	"timeoutStep": 2000,
+	
+	
+	"zMin": 6,
+	"zMax": 22,
+	"zMaxCelda": 16,
+	"zStart": 6,
+	"zParcela": 10,
+	"zLugar": 12,
+	"zCambioCapaTeselas": 12,
+	"zCambioRadio": 14,
+	"zArbol": 18,
+	
+	
+	"craftsConfig": {
+		"api": 'https://crafts.gsic.uva.es/apis/forexp2',
+		"auth": 'Bearer 18de9775-92f0-45e5-affc-e8374076a48c',
+		"querySubclasses": '/query?id=subclasses&ancestor={{{ancestor}}}',
+		"queryProvinces": '/query?id=provinces',
+		"queryPatchesinbox": '/query?id=patchesinbox{{#layer}}&layer={{{layer}}}{{/layer}}{{#soiluse}}&soiluse={{{soiluse}}}{{/soiluse}}{{#lngwest}}&lngwest={{{lngwest}}}{{/lngwest}}{{#lngeast}}&lngeast={{{lngeast}}}{{/lngeast}}{{#latnorth}}&latnorth={{{latnorth}}}{{/latnorth}}{{#latsouth}}&latsouth={{{latsouth}}}{{/latsouth}}{{#areamin}}&areamin={{{areamin}}}{{/areamin}}{{#limit}}&limit={{{limit}}}{{/limit}}{{#offset}}&offset={{{offset}}}{{/offset}}',
+		"queryPlotsinbox": '/query?id=plotsinbox{{#lngwest}}&lngwest={{{lngwest}}}{{/lngwest}}{{#lngeast}}&lngeast={{{lngeast}}}{{/lngeast}}{{#latnorth}}&latnorth={{{latnorth}}}{{/latnorth}}{{#latsouth}}&latsouth={{{latsouth}}}{{/latsouth}}{{#limit}}&limit={{{limit}}}{{/limit}}{{#offset}}&offset={{{offset}}}{{/offset}}',
+		"queryCountspeciesplots": '/query?id=countspeciesplots{{#piris}}&piris={{{.}}}{{/piris}}',
+		"queryTreesinplots": '/query?id=treesinplots{{#piris}}&piris={{{.}}}{{/piris}}',
+		"resourceTemplate": '/resource?id={{{id}}}&iri={{{iri}}}',
+		"resourcesTemplate": '/resources?id={{{id}}}{{#iris}}&iris={{{.}}}{{/iris}}{{#ns}}&ns={{{ns}}}{{/ns}}{{#nspref}}&nspref={{{nspref}}}{{/nspref}}'
+	},
+
+	"craftsConfig1": {
+        "api": 'https://crafts.gsic.uva.es/apis/plotsel',
+        "auth": 'Bearer 035b955a-4386-4a55-bea2-ec6e5f9db615',
+		"resourceTemplate": '/resource?id={{{id}}}&iri={{{iri}}}',
+	},
+	
+	"solrConfig": {
+		"path": 'https://forestexplorer.gsic.uva.es/lugares',
+		"suggestHandler": '/suggest',
+		"suggestTemplate": '?q={{{input}}}',
+		"selectHandler": '/select',
+		"selectTemplate": '?q=id:"{{{id}}}"'
+	},
+	
+	"prefixes": {
+		"ifn": 'https://datos.iepnb.es/def/sector-publico/medio-ambiente/ifn/'
+	},
+
+	"simplifiedPatchLayer": 'http://crossforest.eu/ilu/data/layer/s5',
+	"lowresPatchLayer": 'http://crossforest.eu/ilu/data/layer/s5s5',
+
+	"usoTop": 'http://crossforest.eu/ilu/ontology/Use',
+	"forestuse": 'http://crossforest.eu/ilu/ontology/ForestLand',
+	"agricuse": 'http://crossforest.eu/ilu/ontology/AgriculturalLand',
+	"impruse": 'http://crossforest.eu/ilu/ontology/ArtificialLand',
+	"wetlanduse": 'http://crossforest.eu/ilu/ontology/WetLand',
+	"treelessuse": 'http://crossforest.eu/ilu/ontology/TreelessLand',
+
+	"taxonesTop": ['https://datos.iepnb.es/def/sector-publico/medio-ambiente/ifn/Class2', 'https://datos.iepnb.es/def/sector-publico/medio-ambiente/ifn/Class1'],
+	"maxTaxonFilters": 4,
+		
+	"treeUri": 'https://datos.iepnb.es/def/sector-publico/medio-ambiente/ifn/Tree',
+	"treeicon": 'frondosa',
+	"familyicons": {
+		"https://datos.iepnb.es/def/sector-publico/medio-ambiente/ifn/Class2": 'conifera',
+		"https://datos.iepnb.es/def/sector-publico/medio-ambiente/ifn/Class1": 'frondosa',
+		"https://datos.iepnb.es/def/sector-publico/medio-ambiente/ifn/Family12": 'fagacea',
+		"https://datos.iepnb.es/def/sector-publico/medio-ambiente/ifn/Family16": 'eucalipto',
+		"https://datos.iepnb.es/def/sector-publico/medio-ambiente/ifn/Family13": 'chopo',
+		"https://datos.iepnb.es/def/sector-publico/medio-ambiente/ifn/Family19": 'abedul',
+		"https://datos.iepnb.es/def/sector-publico/medio-ambiente/ifn/Family22": 'cipres',
+		"https://datos.iepnb.es/def/sector-publico/medio-ambiente/ifn/Family44": 'fresno',
+		"https://datos.iepnb.es/def/sector-publico/medio-ambiente/ifn/Family49": 'manzano',
+		"https://datos.iepnb.es/def/sector-publico/medio-ambiente/ifn/Family32": 'acebo',
+		"https://datos.iepnb.es/def/sector-publico/medio-ambiente/ifn/Family17": 'castindias',
+		"https://datos.iepnb.es/def/sector-publico/medio-ambiente/ifn/Family14": 'acacia',
+		"https://datos.iepnb.es/def/sector-publico/medio-ambiente/ifn/Family11": 'olmo',
+		"https://datos.iepnb.es/def/sector-publico/medio-ambiente/ifn/Family46": 'platano',
+		"https://datos.iepnb.es/def/sector-publico/medio-ambiente/ifn/Family41": 'tilo',
+		"https://datos.iepnb.es/def/sector-publico/medio-ambiente/ifn/Family33": 'palmera',
+		"https://datos.iepnb.es/def/sector-publico/medio-ambiente/ifn/Genus122": 'haya',
+		"https://datos.iepnb.es/def/sector-publico/medio-ambiente/ifn/Genus123": 'castano',
+		"https://datos.iepnb.es/def/sector-publico/medio-ambiente/ifn/Genus222": 'sabina',
+		"https://datos.iepnb.es/def/sector-publico/medio-ambiente/ifn/Genus213": 'abeto',
+		"https://datos.iepnb.es/def/sector-publico/medio-ambiente/ifn/Genus132": 'sauce',
+		"https://datos.iepnb.es/def/sector-publico/medio-ambiente/ifn/Genus442": 'olivo',
+		"https://datos.iepnb.es/def/sector-publico/medio-ambiente/ifn/Genus214": 'alerce',
+		"https://datos.iepnb.es/def/sector-publico/medio-ambiente/ifn/Genus216": 'douglas',
+		"https://datos.iepnb.es/def/sector-publico/medio-ambiente/ifn/Genus144": 'robinia',
+		"https://datos.iepnb.es/def/sector-publico/medio-ambiente/ifn/Genus215": 'picea',
+		"https://datos.iepnb.es/def/sector-publico/medio-ambiente/ifn/Genus212": 'cedro',
+		"https://datos.iepnb.es/def/sector-publico/medio-ambiente/ifn/Species21": 'psilv',
+		"https://datos.iepnb.es/def/sector-publico/medio-ambiente/ifn/Species26": 'pinaster',
+		"https://datos.iepnb.es/def/sector-publico/medio-ambiente/ifn/Species45": 'encina',
+		"https://datos.iepnb.es/def/sector-publico/medio-ambiente/ifn/Species23": 'pinonero'
+	},
+	
+	"radioParcela": 350,
+	"radioParcelaN0": 5,
+	"radioParcelaN1": 10,
+	"radioParcelaN2": 15,
+	"radioParcelaN3": 25,
+	"arbsSatParcela": 50,	
+	
+	"colores": [
+		['#E8F5E9', '#C8E6C9', '#A5D6A7', '#81C784', '#66BB6A', '#4CAF50', '#43A047', '#388E3C', '#2E7D32', '#1B5E20'],
+		['#FAFAFA', '#F5F5F5', '#EEEEEE', '#E0E0E0', '#BDBDBD', '#9E9E9E', '#757575', '#616161', '#424242', '#212121'],
+		['#ECEFF1', '#CFD8DC', '#B0BEC5', '#90A4AE', '#78909C', '#607D8B', '#546E7A', '#455A64', '#37474F', '#263238'],
+		['#FFF3E0', '#FFE0B2', '#FFCC80', '#FFB74D', '#FFA726', '#FF9800', '#FB8C00', '#F57C00', '#EF6C00', '#E65100'],
+		['#E3F2FD', '#BBDEFB', '#90CAF9', '#64B5F6', '#42A5F5', '#2196F3', '#1E88E5', '#1976D2', '#1565C0', '#0D47A1'],
+
+		['#FCE4EC', '#F8BBD0', '#F48FB1', '#F06292', '#EC407A', '#E91E63', '#D81B60', '#C2185B', '#AD1457', '#880E4F'],
+		['#F3E5F5', '#E1BEE7', '#CE93D8', '#BA68C8', '#AB47BC', '#9C27B0', '#8E24AA', '#7B1FA2', '#6A1B9A', '#4A148C'],
+		['#E8EAF6', '#C5CAE9', '#9FA8DA', '#7986CB', '#5C6BC0', '#3F51B5', '#3949AB', '#303F9F', '#283593', '#1A237E'],
+		['#E0F7FA', '#B2EBF2', '#80DEEA', '#4DD0E1', '#26C6DA', '#00BCD4', '#00ACC1', '#0097A7', '#00838F', '#006064'],
+		['#EFEBE9', '#D7CCC8', '#BCAAA4', '#A1887F', '#8D6E63', '#795548', '#6D4C41', '#5D4037', '#4E342E', '#3E2723']
+	],
+	"colplotind": 0,
+	"coltesforind": 0,
+	"coltesagrind": 3,
+	"coltesimpind": 2,
+	"colteshumind": 4,
+	"coltesaguind": 4,
+	"colcircplotind": 1,
+	"colindefind": 1,
+	"coltxinds": [5, 6, 7, 8, 9],
+	
+	"langs": ["en", "es"],
+	"nolang": "nolang",
+	
+	"numsugs": 8,
+	
+	"hidemax": 8,
+	"hidebegin": 5,
+	
+	"interSessionQGap": 432000000,
+	"intraSessionQGap": 300000
+}

@@ -1,0 +1,366 @@
+body {
+	padding: 0;
+	margin: 0;
+	padding-top: 5px;
+}
+html, body {
+	height: 100%;
+	width: 100%;
+}
+.big_card {
+	padding-top: 15px;
+	width: 90%;
+    height: 100%;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Add shadow for depth effect */
+    overflow: hidden; /* Ensure that any overflowing content is hidden */
+	bottom: 0px;
+	margin-left: auto;
+    margin-right: auto;
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card_title {
+    margin: 0;
+    padding: 20px;
+    font-size: 36px; /* Increase font size */
+    color: #4a90e2; /* Change font color to a vibrant blue */
+    font-family: 'Pacifico', cursive; /* Use a fancy cursive font */
+    text-transform: uppercase;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Add text shadow for depth */
+    letter-spacing: 1px; /* Add some letter spacing */
+}
+
+#totalPlots {
+    opacity: 0;
+    width: 15%;
+    
+}
+.pltsbtn_div{
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+}
+
+#downloadplots{
+    opacity: 0;
+}
+
+#mimapa {
+	/* position:fixed; */
+	height: 70%;
+	width: 80%;
+	bottom: 0px;
+	margin-left: auto;
+    margin-right: auto;
+}
+#clickedProvinces{
+    margin-top: 10px ;
+    display: flex; 
+    /* justify-content: space-between;  */
+    flex-wrap: wrap;
+    width: 80%;
+}
+#clickedProvinces .province-item {
+    margin: 10px;
+    padding: 8px 10px; 
+    background-color: lightgreen; 
+    margin-bottom: 4px; 
+    border-radius: 4px; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+}
+
+#clickedProvinces .unclick-button {
+    padding: 4px 8px; 
+    margin-left: 8px; 
+    background-color:rgb(55, 124, 55); 
+    border: none; 
+    border-radius: 4px; 
+    color: white; 
+    cursor: pointer; 
+    font-weight: bold;  
+} 
+
+#clickedProvinces .unclick-button:hover {
+    background-color: red; 
+}
+
+@media only screen and (max-width: 768px) {
+    #mimapa {
+        width: 90%; /* Adjust as needed for smaller screens */
+    }
+}
+
+#loadingOverlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    z-index: 1000;
+}
+
+#loadingBar {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 20px;
+    border-radius: 10px; /* Rounded corners */
+    overflow: hidden; /* Ensure rounded corners are visible */
+    background-color: #f2f2f2;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+}
+
+#progressBar {
+    /* Updated style for the progress bar */
+    width: 0;
+    height: 100%;
+    background: linear-gradient(90deg, #4caf50, #ffeb3b); /* Gradient background */
+    border-radius: 10px; /* Rounded corners */
+    transition: width 0.3s ease; /* Smooth animation */
+}
+
+#progressText {
+    /* Updated style for the progress text */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #333; /* Darker text color */
+    font-size: 16px;
+    font-weight: bold;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* Text shadow for contrast */
+}
+
+
+
+
+/* Modal styling */
+.modal {
+    display: none;
+    background-color: rgba(0, 0, 0, 0.4);
+    width: 100%;
+    height: 100%;
+}
+
+.All_modal {
+    width: 50%;
+    position: absolute;
+    top: 25%;
+    left: 25%;
+}
+
+#unique-plots-container {
+    margin: 20px 0;
+    padding: 10px 15px;
+    /* background-color: #f0f0f0; */
+    /* border: 1px solid #ddd;
+    border-radius: 8px; */
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+#unique-template {
+    color: #000000;
+}
+
+.modal-content {
+    position: fixed;
+    z-index: 1001;
+    background-color: #fefefe;
+    padding: 20px;
+    border: 1px solid #888;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+label {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    /* margin: 5px 0; */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    cursor: pointer;
+}
+
+label:hover {
+    background-color: #f9f9f9;
+    border-color: #007bff;
+}
+
+input[type="checkbox"] {
+    display: none;
+}
+
+input[type="checkbox"] + span {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    border: 2px solid #007bff;
+    border-radius: 4px;
+    background-color: white;
+    position: relative;
+}
+
+input[type="checkbox"]:checked + span::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 5px;
+    width: 6px;
+    height: 11px;
+    border: solid #007bff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.selected-species div {
+    display: inline-block;
+    margin: 5px;
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: black;
+    border-radius: 4px;
+    background-color: lightblue;
+}
+
+
+
+.genus-info {
+    padding-top: 4px;
+    padding-left: 10px;
+    max-height: 250px; /* Maximum height for the dropdown container */
+    overflow-y: auto; /* Enable vertical scrolling when content exceeds max height  */
+}
+
+.genus-info div{
+    margin: 10px;
+    
+}
+
+
+.dropdown-container {
+    width: 40%;
+    margin-bottom: 5px;
+    /* cursor: pointer;  */
+}
+
+/* Add styling for dropdown items */
+.toggle-label {
+    cursor: pointer;
+    padding: 8px 10px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    margin: 10px;
+    /* margin-bottom: 5px; */
+    border: 1px solid #ccc; /* Add border */
+}
+
+.toggle-label:hover {
+    background-color: #e0e0e0; /* Change background color on hover */
+}
+
+
+.dropdown-content {
+    /* cursor: pointer; */
+    display: none;
+    padding-left: 20px;
+    border: 1px solid #ccc; /* Add border */
+    border-top: none; /* Hide top border */
+    border-radius: 0 0 5px 5px; /* Round bottom corners */
+}
+
+.dropdown-content div {
+    /* cursor: pointer; */
+    padding: 8px 10px;
+    font-size: 14px;
+    color: #333;
+    border-top: 1px solid #ccc; /* Add border between items */
+}
+
+.dropdown-content div:first-child {
+    border-top: none; /* Hide border for first item */
+    /* cursor: pointer; */
+}
+
+.dropdown-content div:hover {
+    background-color: #f9f9f9;
+    /* cursor: pointer;  */
+}
+
+.dropdown-content div label {
+    cursor: pointer; 
+}
+
+/* Add styling for selected species boxes */
+#selectedSpecies {
+    /* margin-top: 20px; */
+    width: 80%;
+}
+
+
+#selectedSpecies div {
+    display: inline-block;
+    background-color: lightgrey;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
+#selectedSpecies div:hover {
+    background-color: #e0e0e0;
+    /* cursor: pointer; */
+}
+
+.bot_modal {
+    padding-top: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.download-container {
+    /* padding-top: 15px; */
+    width: 20%; /* 1/5 of the available space */
+    display: flex;
+    align-items: flex-start; /* Align button to the top */
+    justify-content: flex-end; /* Align button to the right */
+    cursor: pointer; /* Change cursor to pointer */
+}
+
+#downloadButton {
+    width: auto; /* Allow button to adjust its width based on content */
+}

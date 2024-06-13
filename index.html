@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" id="miviewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Forest Explorer is a web application for browsing the contents of Iberian forestry datasets.">
+    <meta name="author" content="Guillermo Vega-Gorgojo">
+    <meta property="og:title" content="Map - Forest Explorer">
+    <meta property="og:url" content="https://forestexplorer.gsic.uva.es/map">
+    <meta property="og:description" content="Your web application for exploring forestry data of Spain and Portugal.">
+    <!--meta property="og:image" content="https://forestexplorer.gsic.uva.es/app/images/educawood0.png"-->
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="en_US">
+	<meta property="og:locale:alternate" content="es_ES">
+    <title>Map Initialization</title>
+
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="css/forexp.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.7.2/font/bootstrap-icons.min.css">
+
+    
+    
+</head>
+<body>
+    <div class="big_card">
+        <h2 class="card_title">Plot Selector</h2>
+
+        <div id="mimapa"></div>
+
+        <div id="clickedProvinces" ></div>
+
+        <div class="pltsbtn_div">
+            <div id="totalPlots"></div>
+            <button id="downloadplots" class="btn btn-primary">Select Plots</button>
+        </div>
+
+        <!-- Loading bar -->
+        <div id="loadingOverlay">
+            <div id="loadingBar">
+                <div id="progressBar"></div>
+                <div id="progressText">0%</div>
+            </div>
+        </div>
+        
+        <!-- Modal Structure -->
+        <div id="myModal" class="modal">
+            <div class="All_modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Plots Selected</h2>
+                        <div id="unique-plots-container">
+                            Plots with info: <span id="unique-count">{{count}}</span>
+                        </div>
+                        <span class="close">&times;</span>
+                    </div>
+                    <div id="genusInfo" class="genus-info">
+                    </div>
+                    <div class="bot_modal">
+                        <div id="selectedSpecies" class="selected-species"></div>
+                        <div class="download-container">
+                            <button id="downloadButton" class="btn btn-primary" style="display: none;">Download Plots</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    
+
+
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+		<div id="mitostada" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+			<div class="toast-header">
+				<img src="./images/icon.png" height="20" class="rounded me-2" alt="ForestExplorer">
+				<strong id="mitostadaStrong" class="me-auto">Forest Explorer</strong>
+				<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+			</div>
+			<div id="mitostadaBody" class="toast-body"></div>
+		</div>
+	</div>
+
+    
+    <!-- Main JS -->
+    <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
+    <script type="module" src="main.js"></script>
+</body>
+</html>
