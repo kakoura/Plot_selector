@@ -33,6 +33,9 @@
 			}
 		}
 	},
+
+	
+
 	"geolocstart": [40.24, -4.24],	
 	"geoMaxBounds": [ [47, -20], [25, 5] ],
 	"geoMaxBoundsViscosity": 1.0,
@@ -54,6 +57,8 @@
 	
 	"timeout": 4000,
 	"timeoutStep": 2000,
+
+	
 	
 	
 	"zMin": 6,
@@ -65,6 +70,8 @@
 	"zCambioCapaTeselas": 12,
 	"zCambioRadio": 14,
 	"zArbol": 18,
+	
+
 	
 	
 	"craftsConfig": {
@@ -80,11 +87,12 @@
 		"resourcesTemplate": '/resources?id={{{id}}}{{#iris}}&iris={{{.}}}{{/iris}}{{#ns}}&ns={{{ns}}}{{/ns}}{{#nspref}}&nspref={{{nspref}}}{{/nspref}}'
 	},
 
-	"craftsConfig1": {
+	"craftsALL": {
         "api": 'https://crafts.gsic.uva.es/apis/plotsel',
         "auth": 'Bearer 035b955a-4386-4a55-bea2-ec6e5f9db615',
 		"resourceTemplate": '/resource?id={{{id}}}&iri={{{iri}}}',
 	},
+	
 	
 	"solrConfig": {
 		"path": 'https://forestexplorer.gsic.uva.es/lugares',

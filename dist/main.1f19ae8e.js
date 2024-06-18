@@ -187,7 +187,7 @@ module.exports = {
     "resourceTemplate": '/resource?id={{{id}}}&iri={{{iri}}}',
     "resourcesTemplate": '/resources?id={{{id}}}{{#iris}}&iris={{{.}}}{{/iris}}{{#ns}}&ns={{{ns}}}{{/ns}}{{#nspref}}&nspref={{{nspref}}}{{/nspref}}'
   },
-  "craftsConfig1": {
+  "craftsALL": {
     "api": 'https://crafts.gsic.uva.es/apis/plotsel',
     "auth": 'Bearer 035b955a-4386-4a55-bea2-ec6e5f9db615',
     "resourceTemplate": '/resource?id={{{id}}}&iri={{{iri}}}'
@@ -60119,7 +60119,7 @@ function plotsOfProvince(_x9, _x10) {
 }
 function _plotsOfProvince() {
   _plotsOfProvince = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee12(layer, provinceName) {
-    var filteredPlots, flattenedInfoOfPlots, data_info, layerBounds, northEast, southWest, north, east, south, west, qobj, indpag, maspags, _loop4, filteredPlotNames, objrs, infoOfPlots, _iterator46, _step46, objr, provinceData, _loop5, i;
+    var filteredPlots, flattenedInfoOfPlots, data_info, layerBounds, northEast, southWest, north, east, south, west, qobj, indpag, maspags, _loop4, filteredPlotNames, objrs, nsAfter, infoOfPlots, _iterator46, _step46, objr, provinceData, _loop5, i;
     return _regeneratorRuntime().wrap(function _callee12$(_context17) {
       while (1) switch (_context17.prev = _context17.next) {
         case 0:
@@ -60224,51 +60224,52 @@ function _plotsOfProvince() {
             return plot.name;
           });
           console.log("LangLongPLots", filteredPlots);
-
           // console.log("Filtered Plot Names:", filteredPlotNames);
           objrs = descomponerCraftsResources('Plot', filteredPlotNames);
-          console.log(objrs);
+          console.log("objrs:", objrs);
+          nsAfter = filteredPlotNames[0].substring(0, filteredPlotNames[0].lastIndexOf('/') + 1); // console.log(nsAfter);
+          // console.log(filteredPlotNames);
           infoOfPlots = [];
-          _context17.prev = 18;
+          _context17.prev = 19;
           _iterator46 = _createForOfIteratorHelper(objrs);
-          _context17.prev = 20;
+          _context17.prev = 21;
           _iterator46.s();
-        case 22:
+        case 23:
           if ((_step46 = _iterator46.n()).done) {
-            _context17.next = 30;
+            _context17.next = 31;
             break;
           }
           objr = _step46.value;
-          _context17.next = 26;
+          _context17.next = 27;
           return _main.Crafts.getData(_config.default.craftsConfig.resourcesTemplate, objr);
-        case 26:
+        case 27:
           data_info = _context17.sent;
           infoOfPlots.push(data_info);
-        case 28:
-          _context17.next = 22;
+        case 29:
+          _context17.next = 23;
           break;
-        case 30:
-          _context17.next = 35;
+        case 31:
+          _context17.next = 36;
           break;
-        case 32:
-          _context17.prev = 32;
-          _context17.t1 = _context17["catch"](20);
+        case 33:
+          _context17.prev = 33;
+          _context17.t1 = _context17["catch"](21);
           _iterator46.e(_context17.t1);
-        case 35:
-          _context17.prev = 35;
+        case 36:
+          _context17.prev = 36;
           _iterator46.f();
-          return _context17.finish(35);
-        case 38:
+          return _context17.finish(36);
+        case 39:
           flattenedInfoOfPlots = infoOfPlots.flat();
           console.log("SpeciesInfo PLots", flattenedInfoOfPlots);
-          _context17.next = 46;
+          _context17.next = 47;
           break;
-        case 42:
-          _context17.prev = 42;
-          _context17.t2 = _context17["catch"](18);
+        case 43:
+          _context17.prev = 43;
+          _context17.t2 = _context17["catch"](19);
           console.log(err);
           return _context17.abrupt("return");
-        case 46:
+        case 47:
           // Create an empty JSON object to store the data
           // console.log("SpeciesInfo Plots",flattenedInfoOfPlots);
           provinceData = {}; // Add the province name as the Dominant label
@@ -60295,7 +60296,8 @@ function _plotsOfProvince() {
                       name: modifiedPlotName,
                       latitude: plot.latitude,
                       longitude: plot.longitude,
-                      infoSpecies: []
+                      infoSpecies: [],
+                      ns: nsAfter
                     }; // Check if infoSpecies exists and handle it accordingly
                     if (info.infoSpecies) {
                       if (Array.isArray(info.infoSpecies)) {
@@ -60350,23 +60352,23 @@ function _plotsOfProvince() {
             }, _loop5);
           });
           i = 0;
-        case 52:
+        case 53:
           if (!(i < filteredPlots.length && i < flattenedInfoOfPlots.length)) {
-            _context17.next = 57;
+            _context17.next = 58;
             break;
           }
-          return _context17.delegateYield(_loop5(), "t3", 54);
-        case 54:
+          return _context17.delegateYield(_loop5(), "t3", 55);
+        case 55:
           i++;
-          _context17.next = 52;
+          _context17.next = 53;
           break;
-        case 57:
-          return _context17.abrupt("return", provinceData);
         case 58:
+          return _context17.abrupt("return", provinceData);
+        case 59:
         case "end":
           return _context17.stop();
       }
-    }, _callee12, null, [[18, 42], [20, 32, 35, 38]]);
+    }, _callee12, null, [[19, 43], [21, 33, 36, 39]]);
   }));
   return _plotsOfProvince.apply(this, arguments);
 }
@@ -61573,7 +61575,7 @@ selectPlotsbtn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PU
         _context3.t2 = _regeneratorRuntime().keys(allPlotsDict);
       case 31:
         if ((_context3.t3 = _context3.t2()).done) {
-          _context3.next = 72;
+          _context3.next = 71;
           break;
         }
         province = _context3.t3.value;
@@ -61581,18 +61583,18 @@ selectPlotsbtn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PU
         _context3.t4 = _regeneratorRuntime().keys(provinceData);
       case 35:
         if ((_context3.t5 = _context3.t4()).done) {
-          _context3.next = 70;
+          _context3.next = 69;
           break;
         }
         plotKey = _context3.t5.value;
         if (!plotKey.startsWith('plot')) {
-          _context3.next = 68;
+          _context3.next = 67;
           break;
         }
         // Ensure it's a plot key
         plotArray = provinceData[plotKey];
         if (!(plotArray && plotArray.length > 0)) {
-          _context3.next = 67;
+          _context3.next = 66;
           break;
         }
         plotDetail = plotArray[0]; // Assuming there is always at least one plot detail object in the array
@@ -61698,26 +61700,26 @@ selectPlotsbtn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PU
         _iterator3.f();
         return _context3.finish(56);
       case 59:
-        _context3.next = 65;
+        _context3.next = 64;
         break;
       case 61:
-        console.log("Missing uniqueSpecies property for plot:", plotKey);
+        // console.log("Missing uniqueSpecies property for plot:", plotKey);
         // console.log(allPlotsDict[province][plotKey]);
         missingInfo[plotKey] = plotArray;
         delete allPlotsDict[province][plotKey];
         countUniquePlots++;
-      case 65:
-        _context3.next = 68;
+      case 64:
+        _context3.next = 67;
         break;
-      case 67:
+      case 66:
         console.log("No plots or empty plot array for key:", plotKey);
-      case 68:
+      case 67:
         _context3.next = 35;
         break;
-      case 70:
+      case 69:
         _context3.next = 31;
         break;
-      case 72:
+      case 71:
         totalPlots = 0;
         for (area in allPlotsDict) {
           totalPlots += allPlotsDict[area].NumberOfPlots;
@@ -61736,7 +61738,7 @@ selectPlotsbtn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PU
           progressBar.style.width = '0%';
         }, 600);
         displayModal(speciesInfo, totalPlots);
-      case 80:
+      case 79:
       case "end":
         return _context3.stop();
     }
@@ -61827,14 +61829,19 @@ downloadButton.addEventListener('click', function () {
   console.log("Filtered Plots:", filteredPlots);
   var idDictionary = [];
 
-  // // Iterate over each area in the filteredPlots object
+  // // // Iterate over each area in the filteredPlots object
   // for (let area in filteredPlots) {
   // 	// Initialize the area in idDictionary
 
   // 	// Iterate over each plot in the area
   // 	for (let plot in filteredPlots[area]) {
-  // 		// Add plot IDs to the dictionary
-  // 		idDictionary.push(plot);
+  // 		const plotId = plot.split('_')[1];
+  // 		// Access the namespace from the first entry of the plot array
+  // 		const ns = filteredPlots[area][plot][0].ns;
+  // 		// Concatenate the namespace with the extracted plot ID
+  // 		const fullPlotId = ns + plotId;
+  // 		// Add the full plot ID to the dictionary
+  // 		idDictionary.push(fullPlotId);
   // 	}
   // }
 
@@ -61842,65 +61849,63 @@ downloadButton.addEventListener('click', function () {
   // console.log("ID Dictionary:", idDictionary);
   // const objrs = descomponerCraftsResources('PlotInfo', idDictionary);
   // console.log(objrs);
-  // 	let totalInfo=[];
-  // 	let promesas=[];
+  // let totalInfo=[];
+  // let promesas=[];
 
-  // 	for (let objr of objrs) {
-  //         //  a promise for each API request
-  //         promesas.push( new Promise(async function(resolve, reject) {
-  //             try {
-  //                 // call to the datastore
-  //                 let datos = await Crafts.getData(config.craftsConfig1.resourceTemplate, objr);
+  // for (let objr of objrs) {
+  //     //  a promise for each API request
+  //     promesas.push( new Promise(async function(resolve, reject) {
+  //         try {
+  //             // call to the datastore
+  //             let datos = await Crafts.getALLData(config.craftsALL.resourceTemplate, objr);
 
-  //                 // process the results
-  // 				totalInfo.push(datos)
+  //             // process the results
+  // 			totalInfo.push(datos)
 
-  //                 // resolve the promis
-  //                 resolve(true);
-  //             } catch(err) {
-  //                 reject(err);
-  //             }
-  //         }) );
-  //     }
-  // 	console.log(totalInfo);
+  //             // resolve the promis
+  //             resolve(true);
+  //         } catch(err) {
+  //             reject(err);
+  //         }
+  //     }) );
+  // }
+  // console.log(totalInfo);
 
-  // Convert filteredPlots to JSON string
-  var filteredPlotsJSON = JSON.stringify(filteredPlots, null, 2);
+  // // Convert filteredPlots to JSON string
+  // const filteredPlotsJSON = JSON.stringify(filteredPlots, null, 2);
 
-  // Create a Blob containing the JSON data
-  var blob = new Blob([filteredPlotsJSON], {
-    type: 'application/json'
-  });
+  // // Create a Blob containing the JSON data
+  // const blob = new Blob([filteredPlotsJSON], { type: 'application/json' });
 
-  // Create a temporary link element
-  var link = document.createElement('a');
-  link.href = URL.createObjectURL(blob);
+  // // Create a temporary link element
+  // const link = document.createElement('a');
+  // link.href = URL.createObjectURL(blob);
 
-  // Generate the base filename
-  var filename = 'plots';
+  // // Generate the base filename
+  // let filename = 'plots';
 
-  // Check if the file already exists in the directory
-  var files = Object.keys(localStorage);
-  var fileExists = false;
-  var count = 1;
-  while (files.includes("".concat(filename, ".json"))) {
-    // If the file already exists, increment the count and update the filename
-    filename = "plots (".concat(count, ")");
-    count++;
-    fileExists = true;
-  }
+  // // Check if the file already exists in the directory
+  // const files = Object.keys(localStorage);
+  // let fileExists = false;
+  // let count = 1;
+  // while (files.includes(`${filename}.json`)) {
+  // 	// If the file already exists, increment the count and update the filename
+  // 	filename = `plots (${count})`;
+  // 	count++;
+  // 	fileExists = true;
+  // }
 
-  // Set the download attribute to the updated filename
-  link.setAttribute('download', "".concat(filename, ".json"));
+  // // Set the download attribute to the updated filename
+  // link.setAttribute('download', `${filename}.json`);
 
-  // Append the link to the document body
-  document.body.appendChild(link);
+  // // Append the link to the document body
+  // document.body.appendChild(link);
 
-  // Trigger a click event on the link to initiate the download
-  link.click();
+  // // Trigger a click event on the link to initiate the download
+  // link.click();
 
-  // Remove the link from the document body
-  document.body.removeChild(link);
+  // // Remove the link from the document body
+  // document.body.removeChild(link);
 
   //Reset the attributes	
   modal.style.display = 'none';
@@ -62876,6 +62881,43 @@ function CraftsAPI(craftsConfig) {
       return _ref6.apply(this, arguments);
     };
   }();
+
+  // // petición tipo GET de CRAFTS
+  // this.getALLData = async function(template, objpars) {
+  // 	// ajusto método y body
+  // 	options.method = 'GET';
+  // 	delete options.body;
+  // 	// preparo la url de la petición
+  // 	const url = config.craftsALL.api + Mustache.render(template, objpars);
+  // 	console.log("url",url);
+  // 	// console.log(url);
+  // 	// hago log de la url
+  // 	console.debug(url);
+  // 	// info para GA
+  // 	//addEventData('crafts_reqs', 1);	// TODO
+  // 	// hago la petición
+
+  // 	const response = await fetch(url, options);
+  // 	if (response.ok) { // if HTTP-status is 200-299
+  // 		// petición exitosa
+  // 		const datos = await response.json();
+  // 		// devuelvo los datos
+  // 		return Promise.resolve(datos);		
+  // 	} else  { // logging del error
+  // 		// leo la respuesta del error
+  // 		const resperr = await response.json();
+  // 		const eobj = {
+  // 			message: 'CRAFTS error: ' + resperr.message,
+  // 			error: {
+  // 				url: url,
+  // 				status: response.status,
+  // 				statusText: response.statusText			
+  // 			}
+  // 		};
+  // 		// rechazo la promesa
+  // 		return Promise.reject(eobj);
+  // 	}
+  // }
 }
 },{"../data/config.json":"data/config.json","mustache":"node_modules/mustache/mustache.js"}],"node_modules/lz-string/libs/lz-string.js":[function(require,module,exports) {
 var define;
@@ -63953,7 +63995,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59430" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63465" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

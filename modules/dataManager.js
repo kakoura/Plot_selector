@@ -1270,11 +1270,14 @@ async function plotsOfProvince(layer,provinceName){
 	const filteredPlotNames = filteredPlots.map(plot => plot.name);
 
 	console.log("LangLongPLots",filteredPlots);
-
 	// console.log("Filtered Plot Names:", filteredPlotNames);
 	const objrs = descomponerCraftsResources('Plot', filteredPlotNames);
-	console.log(objrs);
+	console.log("objrs:",objrs);
 
+	const nsAfter=filteredPlotNames[0].substring(0, filteredPlotNames[0].lastIndexOf('/') + 1);
+	// console.log(nsAfter);
+	// console.log(filteredPlotNames);
+	
 	const infoOfPlots=[];
 	try {
 		for (let objr of objrs) {
@@ -1324,7 +1327,8 @@ for (let i = 0; i < filteredPlots.length && i < flattenedInfoOfPlots.length; i++
             name: modifiedPlotName,
             latitude: plot.latitude,
             longitude: plot.longitude,
-			infoSpecies:[]
+			infoSpecies:[],
+			ns:nsAfter
         };
 		// Check if infoSpecies exists and handle it accordingly
         if (info.infoSpecies) {
