@@ -93,6 +93,14 @@ function CraftsAPI(craftsConfig) {
 			}
 	};  
 
+	const optionsALL = {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			'Authorization': config.craftsALL.auth
+		}
+	};  
+
 	// test 
 	this.test = async function() {
 		// ajusto método
@@ -158,42 +166,42 @@ function CraftsAPI(craftsConfig) {
 		}
 	}
 
-	// // petición tipo GET de CRAFTS
-	// this.getALLData = async function(template, objpars) {
-	// 	// ajusto método y body
-	// 	options.method = 'GET';
-	// 	delete options.body;
-	// 	// preparo la url de la petición
-	// 	const url = config.craftsALL.api + Mustache.render(template, objpars);
-	// 	console.log("url",url);
-	// 	// console.log(url);
-	// 	// hago log de la url
-	// 	console.debug(url);
-	// 	// info para GA
-	// 	//addEventData('crafts_reqs', 1);	// TODO
-	// 	// hago la petición
+	// petición tipo GET de CRAFTS
+	this.getALLData = async function(template, objpars) {
+		// ajusto método y body
+		optionsALL.method = 'GET';
+		delete optionsALL.body;
+		// preparo la url de la petición
+		const url = config.craftsALL.api + Mustache.render(template, objpars);
+		console.log("url",url);
+		// console.log(url);
+		// hago log de la url
+		console.debug(url);
+		// info para GA
+		//addEventData('crafts_reqs', 1);	// TODO
+		// hago la petición
 		
-	// 	const response = await fetch(url, options);
-	// 	if (response.ok) { // if HTTP-status is 200-299
-	// 		// petición exitosa
-	// 		const datos = await response.json();
-	// 		// devuelvo los datos
-	// 		return Promise.resolve(datos);		
-	// 	} else  { // logging del error
-	// 		// leo la respuesta del error
-	// 		const resperr = await response.json();
-	// 		const eobj = {
-	// 			message: 'CRAFTS error: ' + resperr.message,
-	// 			error: {
-	// 				url: url,
-	// 				status: response.status,
-	// 				statusText: response.statusText			
-	// 			}
-	// 		};
-	// 		// rechazo la promesa
-	// 		return Promise.reject(eobj);
-	// 	}
-	// }
+		const response = await fetch(url, optionsALL);
+		if (response.ok) { // if HTTP-status is 200-299
+			// petición exitosa
+			const datos = await response.json();
+			// devuelvo los datos
+			return Promise.resolve(datos);		
+		} else  { // logging del error
+			// leo la respuesta del error
+			const resperr = await response.json();
+			const eobj = {
+				message: 'CRAFTS error: ' + resperr.message,
+				error: {
+					url: url,
+					status: response.status,
+					statusText: response.statusText			
+				}
+			};
+			// rechazo la promesa
+			return Promise.reject(eobj);
+		}
+	}
 
 
 }

@@ -190,7 +190,8 @@ module.exports = {
   "craftsALL": {
     "api": 'https://crafts.gsic.uva.es/apis/plotsel',
     "auth": 'Bearer 035b955a-4386-4a55-bea2-ec6e5f9db615',
-    "resourceTemplate": '/resource?id={{{id}}}&iri={{{iri}}}'
+    "resourceTemplate": '/resource?id={{{id}}}&iri={{{iri}}}',
+    "resourcesTemplate": '/resources?id={{{id}}}{{#iris}}&iris={{{.}}}{{/iris}}{{#ns}}&ns={{{ns}}}{{/ns}}{{#nspref}}&nspref={{{nspref}}}{{/nspref}}'
   },
   "solrConfig": {
     "path": 'https://forestexplorer.gsic.uva.es/lugares',
@@ -61829,21 +61830,21 @@ downloadButton.addEventListener('click', function () {
   console.log("Filtered Plots:", filteredPlots);
   var idDictionary = [];
 
-  // // // Iterate over each area in the filteredPlots object
-  // for (let area in filteredPlots) {
-  // 	// Initialize the area in idDictionary
+  // // Iterate over each area in the filteredPlots object
+  for (var area in filteredPlots) {
+    // Initialize the area in idDictionary
 
-  // 	// Iterate over each plot in the area
-  // 	for (let plot in filteredPlots[area]) {
-  // 		const plotId = plot.split('_')[1];
-  // 		// Access the namespace from the first entry of the plot array
-  // 		const ns = filteredPlots[area][plot][0].ns;
-  // 		// Concatenate the namespace with the extracted plot ID
-  // 		const fullPlotId = ns + plotId;
-  // 		// Add the full plot ID to the dictionary
-  // 		idDictionary.push(fullPlotId);
-  // 	}
-  // }
+    // Iterate over each plot in the area
+    for (var plot in filteredPlots[area]) {
+      var plotId = plot.split('_')[1];
+      // Access the namespace from the first entry of the plot array
+      var ns = filteredPlots[area][plot][0].ns;
+      // Concatenate the namespace with the extracted plot ID
+      var fullPlotId = ns + plotId;
+      // Add the full plot ID to the dictionary
+      idDictionary.push(fullPlotId);
+    }
+  }
 
   // Print the idDictionary to check the results
   // console.log("ID Dictionary:", idDictionary);
@@ -61857,7 +61858,7 @@ downloadButton.addEventListener('click', function () {
   //     promesas.push( new Promise(async function(resolve, reject) {
   //         try {
   //             // call to the datastore
-  //             let datos = await Crafts.getALLData(config.craftsALL.resourceTemplate, objr);
+  //             let datos = await Crafts.getALLData(config.craftsALL.resourcesTemplate, objr);
 
   //             // process the results
   // 			totalInfo.push(datos)
@@ -61871,41 +61872,43 @@ downloadButton.addEventListener('click', function () {
   // }
   // console.log(totalInfo);
 
-  // // Convert filteredPlots to JSON string
-  // const filteredPlotsJSON = JSON.stringify(filteredPlots, null, 2);
+  // Convert filteredPlots to JSON string
+  var filteredPlotsJSON = JSON.stringify(filteredPlots, null, 2);
 
-  // // Create a Blob containing the JSON data
-  // const blob = new Blob([filteredPlotsJSON], { type: 'application/json' });
+  // Create a Blob containing the JSON data
+  var blob = new Blob([filteredPlotsJSON], {
+    type: 'application/json'
+  });
 
-  // // Create a temporary link element
-  // const link = document.createElement('a');
-  // link.href = URL.createObjectURL(blob);
+  // Create a temporary link element
+  var link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
 
-  // // Generate the base filename
-  // let filename = 'plots';
+  // Generate the base filename
+  var filename = 'plots';
 
-  // // Check if the file already exists in the directory
-  // const files = Object.keys(localStorage);
-  // let fileExists = false;
-  // let count = 1;
-  // while (files.includes(`${filename}.json`)) {
-  // 	// If the file already exists, increment the count and update the filename
-  // 	filename = `plots (${count})`;
-  // 	count++;
-  // 	fileExists = true;
-  // }
+  // Check if the file already exists in the directory
+  var files = Object.keys(localStorage);
+  var fileExists = false;
+  var count = 1;
+  while (files.includes("".concat(filename, ".json"))) {
+    // If the file already exists, increment the count and update the filename
+    filename = "plots (".concat(count, ")");
+    count++;
+    fileExists = true;
+  }
 
-  // // Set the download attribute to the updated filename
-  // link.setAttribute('download', `${filename}.json`);
+  // Set the download attribute to the updated filename
+  link.setAttribute('download', "".concat(filename, ".json"));
 
-  // // Append the link to the document body
-  // document.body.appendChild(link);
+  // Append the link to the document body
+  document.body.appendChild(link);
 
-  // // Trigger a click event on the link to initiate the download
-  // link.click();
+  // Trigger a click event on the link to initiate the download
+  link.click();
 
-  // // Remove the link from the document body
-  // document.body.removeChild(link);
+  // Remove the link from the document body
+  document.body.removeChild(link);
 
   //Reset the attributes	
   modal.style.display = 'none';
@@ -62785,6 +62788,13 @@ function CraftsAPI(craftsConfig) {
       'Authorization': craftsConfig.auth
     }
   };
+  var optionsALL = {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': _config.default.craftsALL.auth
+    }
+  };
 
   // test 
   this.test = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
@@ -62882,42 +62892,62 @@ function CraftsAPI(craftsConfig) {
     };
   }();
 
-  // // petición tipo GET de CRAFTS
-  // this.getALLData = async function(template, objpars) {
-  // 	// ajusto método y body
-  // 	options.method = 'GET';
-  // 	delete options.body;
-  // 	// preparo la url de la petición
-  // 	const url = config.craftsALL.api + Mustache.render(template, objpars);
-  // 	console.log("url",url);
-  // 	// console.log(url);
-  // 	// hago log de la url
-  // 	console.debug(url);
-  // 	// info para GA
-  // 	//addEventData('crafts_reqs', 1);	// TODO
-  // 	// hago la petición
-
-  // 	const response = await fetch(url, options);
-  // 	if (response.ok) { // if HTTP-status is 200-299
-  // 		// petición exitosa
-  // 		const datos = await response.json();
-  // 		// devuelvo los datos
-  // 		return Promise.resolve(datos);		
-  // 	} else  { // logging del error
-  // 		// leo la respuesta del error
-  // 		const resperr = await response.json();
-  // 		const eobj = {
-  // 			message: 'CRAFTS error: ' + resperr.message,
-  // 			error: {
-  // 				url: url,
-  // 				status: response.status,
-  // 				statusText: response.statusText			
-  // 			}
-  // 		};
-  // 		// rechazo la promesa
-  // 		return Promise.reject(eobj);
-  // 	}
-  // }
+  // petición tipo GET de CRAFTS
+  this.getALLData = /*#__PURE__*/function () {
+    var _ref7 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7(template, objpars) {
+      var url, response, datos, resperr, eobj;
+      return _regeneratorRuntime().wrap(function _callee7$(_context7) {
+        while (1) switch (_context7.prev = _context7.next) {
+          case 0:
+            // ajusto método y body
+            optionsALL.method = 'GET';
+            delete optionsALL.body;
+            // preparo la url de la petición
+            url = _config.default.craftsALL.api + _mustache.default.render(template, objpars);
+            console.log("url", url);
+            // console.log(url);
+            // hago log de la url
+            console.debug(url);
+            // info para GA
+            //addEventData('crafts_reqs', 1);	// TODO
+            // hago la petición
+            _context7.next = 7;
+            return fetch(url, optionsALL);
+          case 7:
+            response = _context7.sent;
+            if (!response.ok) {
+              _context7.next = 15;
+              break;
+            }
+            _context7.next = 11;
+            return response.json();
+          case 11:
+            datos = _context7.sent;
+            return _context7.abrupt("return", Promise.resolve(datos));
+          case 15:
+            _context7.next = 17;
+            return response.json();
+          case 17:
+            resperr = _context7.sent;
+            eobj = {
+              message: 'CRAFTS error: ' + resperr.message,
+              error: {
+                url: url,
+                status: response.status,
+                statusText: response.statusText
+              }
+            }; // rechazo la promesa
+            return _context7.abrupt("return", Promise.reject(eobj));
+          case 20:
+          case "end":
+            return _context7.stop();
+        }
+      }, _callee7);
+    }));
+    return function (_x6, _x7) {
+      return _ref7.apply(this, arguments);
+    };
+  }();
 }
 },{"../data/config.json":"data/config.json","mustache":"node_modules/mustache/mustache.js"}],"node_modules/lz-string/libs/lz-string.js":[function(require,module,exports) {
 var define;
@@ -63995,7 +64025,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63465" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55007" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

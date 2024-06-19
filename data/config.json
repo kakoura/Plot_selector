@@ -91,6 +91,7 @@
         "api": 'https://crafts.gsic.uva.es/apis/plotsel',
         "auth": 'Bearer 035b955a-4386-4a55-bea2-ec6e5f9db615',
 		"resourceTemplate": '/resource?id={{{id}}}&iri={{{iri}}}',
+		"resourcesTemplate": '/resources?id={{{id}}}{{#iris}}&iris={{{.}}}{{/iris}}{{#ns}}&ns={{{ns}}}{{/ns}}{{#nspref}}&nspref={{{nspref}}}{{/nspref}}'
 	},
 	
 	

@@ -645,21 +645,21 @@ downloadButton.addEventListener('click', function() {
     console.log("Filtered Plots:", filteredPlots);
 	let idDictionary = [];
 
-	// // // Iterate over each area in the filteredPlots object
-	// for (let area in filteredPlots) {
-	// 	// Initialize the area in idDictionary
+	// // Iterate over each area in the filteredPlots object
+	for (let area in filteredPlots) {
+		// Initialize the area in idDictionary
 		
-	// 	// Iterate over each plot in the area
-	// 	for (let plot in filteredPlots[area]) {
-	// 		const plotId = plot.split('_')[1];
-	// 		// Access the namespace from the first entry of the plot array
-	// 		const ns = filteredPlots[area][plot][0].ns;
-	// 		// Concatenate the namespace with the extracted plot ID
-	// 		const fullPlotId = ns + plotId;
-	// 		// Add the full plot ID to the dictionary
-	// 		idDictionary.push(fullPlotId);
-	// 	}
-	// }
+		// Iterate over each plot in the area
+		for (let plot in filteredPlots[area]) {
+			const plotId = plot.split('_')[1];
+			// Access the namespace from the first entry of the plot array
+			const ns = filteredPlots[area][plot][0].ns;
+			// Concatenate the namespace with the extracted plot ID
+			const fullPlotId = ns + plotId;
+			// Add the full plot ID to the dictionary
+			idDictionary.push(fullPlotId);
+		}
+	}
 
 // Print the idDictionary to check the results
 	// console.log("ID Dictionary:", idDictionary);
@@ -673,7 +673,7 @@ downloadButton.addEventListener('click', function() {
     //     promesas.push( new Promise(async function(resolve, reject) {
     //         try {
     //             // call to the datastore
-    //             let datos = await Crafts.getALLData(config.craftsALL.resourceTemplate, objr);
+    //             let datos = await Crafts.getALLData(config.craftsALL.resourcesTemplate, objr);
 
     //             // process the results
 	// 			totalInfo.push(datos)
@@ -687,41 +687,41 @@ downloadButton.addEventListener('click', function() {
     // }
 	// console.log(totalInfo);
 	
-	// // Convert filteredPlots to JSON string
-	// const filteredPlotsJSON = JSON.stringify(filteredPlots, null, 2);
+	// Convert filteredPlots to JSON string
+	const filteredPlotsJSON = JSON.stringify(filteredPlots, null, 2);
 
-	// // Create a Blob containing the JSON data
-	// const blob = new Blob([filteredPlotsJSON], { type: 'application/json' });
+	// Create a Blob containing the JSON data
+	const blob = new Blob([filteredPlotsJSON], { type: 'application/json' });
 
-	// // Create a temporary link element
-	// const link = document.createElement('a');
-	// link.href = URL.createObjectURL(blob);
+	// Create a temporary link element
+	const link = document.createElement('a');
+	link.href = URL.createObjectURL(blob);
 
-	// // Generate the base filename
-	// let filename = 'plots';
+	// Generate the base filename
+	let filename = 'plots';
 
-	// // Check if the file already exists in the directory
-	// const files = Object.keys(localStorage);
-	// let fileExists = false;
-	// let count = 1;
-	// while (files.includes(`${filename}.json`)) {
-	// 	// If the file already exists, increment the count and update the filename
-	// 	filename = `plots (${count})`;
-	// 	count++;
-	// 	fileExists = true;
-	// }
+	// Check if the file already exists in the directory
+	const files = Object.keys(localStorage);
+	let fileExists = false;
+	let count = 1;
+	while (files.includes(`${filename}.json`)) {
+		// If the file already exists, increment the count and update the filename
+		filename = `plots (${count})`;
+		count++;
+		fileExists = true;
+	}
 
-	// // Set the download attribute to the updated filename
-	// link.setAttribute('download', `${filename}.json`);
+	// Set the download attribute to the updated filename
+	link.setAttribute('download', `${filename}.json`);
 
-	// // Append the link to the document body
-	// document.body.appendChild(link);
+	// Append the link to the document body
+	document.body.appendChild(link);
 
-	// // Trigger a click event on the link to initiate the download
-	// link.click();
+	// Trigger a click event on the link to initiate the download
+	link.click();
 
-	// // Remove the link from the document body
-	// document.body.removeChild(link);
+	// Remove the link from the document body
+	document.body.removeChild(link);
 
 	
 
